@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Technopark Homework 1</string>
+    <string name="string_no_number">No number</string>
+    <string name="string_button_add_item">Add item</string>
+</resources>
