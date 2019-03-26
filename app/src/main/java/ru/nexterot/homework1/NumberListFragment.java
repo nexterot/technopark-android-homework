@@ -36,20 +36,28 @@ public class NumberListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("FRAGMENT_DEBUG", "fragment created");
 
-        setRetainInstance(true);
-        /*
+        // setRetainInstance(true);
+
         if (savedInstanceState != null) {
             currentNumber = savedInstanceState.getInt("maxNum", MAX_NUMBER);
+            Log.d("FRAGMENT_DEBUG", "restored maxNum="+currentNumber);
         } else {
-            Log.d("Fragment", "no savedInstanceState on create");
+            Log.d("FRAGMENT_DEBUG", "nothing to restore");
             currentNumber = MAX_NUMBER;
         }
-        */
+
 
         ArrayList<String> strings = new ArrayList<>();
         fillList(strings);
         adapter = new MyAdapter(strings);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("FRAGMENT_DEBUG", "fragment destroyed");
     }
 
     @Nullable
@@ -77,9 +85,8 @@ public class NumberListFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        /*
         outState.putInt("maxNum", currentNumber);
-        */
+        Log.d("FRAGMENT_DEBUG", "saved maxNum="+currentNumber);
     }
 
     void fillList(List<String> toFill) {
@@ -140,6 +147,7 @@ public class NumberListFragment extends Fragment {
         }
 
         void addItem() {
+            currentNumber++;
             if (mData.size() > 0) {
                 String lastItem = mData.get(mData.size() - 1);
                 String newItem = Integer.parseInt(lastItem) + 1 + "";
