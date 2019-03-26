@@ -29,6 +29,10 @@ public class NumberListFragment extends Fragment {
 
     private MyAdapter adapter;
 
+    interface ItemClickHandler {
+        void onNumSelected(String num, int color);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,16 +97,11 @@ public class NumberListFragment extends Fragment {
             mTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (getActivity() != null) {
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("num", ((TextView) v).getText().toString());
-                        bundle.putInt("color", ((TextView) v).getCurrentTextColor());
-                        Fragment fragment = new NumberDisplayFragment();
-                        fragment.setArguments(bundle);
-                        transaction.replace(R.id.fragment_container, fragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                    String num = ((TextView) v).getText().toString();
+                    int color = ((TextView) v).getCurrentTextColor();
+                    MainActivity activity = (MainActivity) getActivity();
+                    if (activity != null) {
+                        activity.onNumSelected(num, color);
                     }
                 }
             });
